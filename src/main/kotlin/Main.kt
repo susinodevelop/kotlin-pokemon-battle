@@ -1,19 +1,17 @@
+import repository.PokemonDictionary
 import model.battle.Battle
 import model.pokemon.*
+import service.Selector
 
-var pokemonDictionary: PokemonDictionary = PokemonDictionary()
+var selector: Selector = Selector()
 
 fun main(args: Array<String>) {
 
-    println("Pokemons disponibles:")
-    var i: Int = 0
-    for (pokemon in pokemonDictionary.pokemons) {
-        println("${++i} - ${pokemon.value.name}")
-    }
-    println("--------------------- PROCESO DE SELECCIÓN ---------------------")
 
-    var pokemon1: IPokemon = takePokemon()
-    var pokemon2: IPokemon = takePokemon()
+    println("--------------------- PROCESO DE SELECCIÓN ---------------------")
+    selector.showAvailablePokemons()
+    var pokemon1: IPokemon = selector.selectPokemon()
+    var pokemon2: IPokemon = selector.selectPokemon()
 
     println("--------------------- ¡EMPIEZA LA BATALLA! ---------------------")
 
@@ -21,16 +19,3 @@ fun main(args: Array<String>) {
     battle.fight()
 }
 
-fun takePokemon(): IPokemon {
-    var pokemon: IPokemon?
-    println("Escribe el nombre del pokemon")
-    do {
-        var pokemonName: String = readln()
-        pokemon = pokemonDictionary.pokemons.get(pokemonName.uppercase());
-        if (pokemon == null){
-            println("$pokemonName no está disponible, elije otro")
-        }
-    } while (pokemon == null)
-    println("¡${pokemon.name} te elijo a ti!")
-    return pokemon
-}
