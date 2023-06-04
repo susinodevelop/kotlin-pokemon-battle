@@ -1,3 +1,5 @@
+package repository
+
 import model.pokemon.*
 
 class PokemonDictionary {
