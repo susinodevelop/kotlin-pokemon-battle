@@ -23,8 +23,8 @@ class Battle(
             this.executeMovement(movement, pokemon2, pokemon1)
         }
 
-        if (pokemon1.isAlive()) println("${pokemon1.name} is the winner!!!")
-        else println("${pokemon2.name} is the winner!!!")
+        if (pokemon1.isAlive()) println("${pokemon1.name} ha ganado!!!")
+        else println("${pokemon2.name} ha ganado!!!")
     }
 
     fun selectMovement(movements: Map<String, IMovement>): IMovement {
@@ -41,6 +41,9 @@ class Battle(
 
             is DefenseMovement -> println("${executor.name} se ha defendido con ${movement.name}")
             else -> println("${executor.name} ha usado ${movement.name}")
+        }
+        if (!victim.isAlive()){
+            println("${victim.name} se ha debilitado")
         }
     }
 

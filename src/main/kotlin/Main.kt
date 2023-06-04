@@ -1,32 +1,36 @@
 import model.battle.Battle
-import model.movement.*
-import model.pokemon.Bulbasaur
-import model.pokemon.Charmander
-import model.pokemon.Squirtle
-import model.type.IFire
+import model.pokemon.*
+
+var pokemonDictionary: PokemonDictionary = PokemonDictionary()
 
 fun main(args: Array<String>) {
-    var charmander = Charmander(
-        movements = mapOf(
-            "Ascuas" to Ascuas(),
-            "Reflejo" to Reflejo()
-        )
-    )
 
-    var bulbasaur = Bulbasaur(
-        movements = mapOf(
-            "LatigoCepa" to LatigoCepa(),
-            "Latigo" to Latigo()
-        )
-    )
+    println("Pokemons disponibles:")
+    var i: Int = 0
+    for (pokemon in pokemonDictionary.pokemons) {
+        println("${++i} - ${pokemon.value.name}")
+    }
+    println("--------------------- PROCESO DE SELECCIÓN ---------------------")
 
-    var squirtle = Squirtle(
-        movements = mapOf(
-            "Burbuja" to Burbuja(),
-            "Reflejo" to Reflejo()
-        )
-    )
+    var pokemon1: IPokemon = takePokemon()
+    var pokemon2: IPokemon = takePokemon()
 
-    var battle: Battle = Battle(charmander, squirtle)
+    println("--------------------- ¡EMPIEZA LA BATALLA! ---------------------")
+
+    var battle: Battle = Battle(pokemon1, pokemon2)
     battle.fight()
+}
+
+fun takePokemon(): IPokemon {
+    var pokemon: IPokemon?
+    println("Escribe el nombre del pokemon")
+    do {
+        var pokemonName: String = readln()
+        pokemon = pokemonDictionary.pokemons.get(pokemonName.uppercase());
+        if (pokemon == null){
+            println("$pokemonName no está disponible, elije otro")
+        }
+    } while (pokemon == null)
+    println("¡${pokemon.name} te elijo a ti!")
+    return pokemon
 }
