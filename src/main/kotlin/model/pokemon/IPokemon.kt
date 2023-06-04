@@ -1,5 +1,6 @@
 package model.pokemon
 
+import model.movement.functionality.AttackMovement
 import model.movement.functionality.IMovement
 import model.type.IFire
 import model.type.IType
@@ -14,13 +15,22 @@ interface IPokemon {
     var specialDefense: Int
     var speed: Int
     var types: List<KClass<*>>
-    var movements: Map<String, IMovement>
-
+    var movements: MutableMap<String, IMovement>
     fun isAlive(): Boolean {
         return life > 0
     }
 
     fun damage(damage: Int) {
         this.life = life - damage
+    }
+
+    fun initializeMovements(vararg movements: IMovement) {
+        for (movement in movements) {
+            addMovement(movement)
+        }
+    }
+
+    fun addMovement(movement: IMovement) {
+        movements.put(movement.name, movement)
     }
 }
